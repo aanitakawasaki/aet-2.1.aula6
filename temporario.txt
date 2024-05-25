@@ -1,0 +1,28 @@
+A seguir, temos as orientações sobre o projeto:         
+    ●Desenvolver o Back-End de uma aplicação que permite cadastrar usuário, listar todos os usuários, atualizar usuário, excluir usuário, fazer login e fazer logout
+    ●Utilizar o PostgreSQL como gerenciador de banco de dados relacional. Deve-se criar uma tabela “users” com as colunas: “id”, “email”, “name” e “password”. 
+
+Para registrar ou atualizar um novo usuário, algumas validações devem ser realizadas: 
+    ●O campo “name” deve aceitar apenas letras e espaços em branco, e ter no mínimo 4 caracteres (desconsiderando os espaços em branco). 
+    ●O campo “emaill” deve seguir um padrão válido. 
+    ●O campo “password” deve conter pelo menos uma letra e um número, e ter no mínimo 8 caracteres de comprimento.
+    ●Requisições para o servidor com um ou mais campos que não estejam de acordo com os critérios especificados, devem receber uma resposta apropriada. 
+    ●Todo o código precisa estar fortemente tipado. Na próxima página, são mostradas as rotas que devem ser implementadas.
+
+As rotas que devem ser implementadas: 
+a) Cadastro - POST /users/ 
+    ● Recebe: name, email e password; 
+    ● Retorna: id, name, email; 
+b) Login - POST /login/ 
+    ● Recebe: email e password; 
+    ● Retorna: id; 
+    ● Cookie: token = sessionID; 
+c) Logout - DELETE /logout/ 
+    ● Remove o cookie; 
+d) Atualiza usuário - PATCH (autenticada) /users/:id 
+    ● Recebe: name, email e/ou password (não é obrigatório informar todos os campos); 
+    ● Retorna: id, name e email; 
+e) Remove usuário - DELETE (autenticada) /users/:id 
+    ● Retorna: id, name e email do usuário excluído; 
+f) Lista todos os usuários - GET /users/ 
+    ● Retorna: id, name e email de todos os usuários.
