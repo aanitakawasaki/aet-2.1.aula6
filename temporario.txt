@@ -6,9 +6,6 @@ Para registrar ou atualizar um novo usuário, algumas validações devem ser rea
     ●Todo o código precisa estar fortemente tipado. Na próxima página, são mostradas as rotas que devem ser implementadas.
 
 As rotas que devem ser implementadas: 
-a) Cadastro - POST /users/ 
-    ● Recebe: name, email e password; 
-    ● Retorna: id, name, email; 
 b) Login - POST /login/ 
     ● Recebe: email e password; 
     ● Retorna: id; 
@@ -18,7 +15,6 @@ c) Logout - DELETE /logout/
 d) Atualiza usuário - PATCH (autenticada) /users/:id 
     ● Recebe: name, email e/ou password (não é obrigatório informar todos os campos); 
     ● Retorna: id, name e email; 
-e) Remove usuário - DELETE (autenticada) /users/:id 
-    ● Retorna: id, name e email do usuário excluído; 
+e) Remove usuário - DELETE (autenticada)
 f) Lista todos os usuários - GET /users/ 
     ● Retorna: id, name e email de todos os usuários.

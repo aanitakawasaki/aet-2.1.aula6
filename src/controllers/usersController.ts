@@ -139,8 +139,9 @@ export const usersController = {
             const deletedUser = await usersService.deleteUser(id);
             res.status(200).json(
                 {
-                    'success': true,
-                    'data': deletedUser,
+                    'id do usuário': deletedUser[0].id,
+                    'email do usuário': deletedUser[0].email,
+                    'nome do usuário': deletedUser[0].name
                 }
             );
         } catch(err: any) {

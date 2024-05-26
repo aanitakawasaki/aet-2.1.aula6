@@ -66,7 +66,6 @@ export const usersController = {
         try {
             const createdUser = yield usersService.createUser(email, name, password);
             res.status(200).json({
-                'sucess': true,
                 'id do usuário': createdUser[0].id,
                 'email do usuário': createdUser[0].email,
                 'nome do usuário': createdUser[0].name
@@ -122,8 +121,9 @@ export const usersController = {
         try {
             const deletedUser = yield usersService.deleteUser(id);
             res.status(200).json({
-                'success': true,
-                'data': deletedUser,
+                'id do usuário': deletedUser[0].id,
+                'email do usuário': deletedUser[0].email,
+                'nome do usuário': deletedUser[0].name
             });
         }
         catch (err) {
