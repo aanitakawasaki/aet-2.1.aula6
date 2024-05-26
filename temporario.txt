@@ -16,5 +16,3 @@ d) Atualiza usuário - PATCH (autenticada) /users/:id
     ● Recebe: name, email e/ou password (não é obrigatório informar todos os campos); 
     ● Retorna: id, name e email; 
 e) Remove usuário - DELETE (autenticada)
-f) Lista todos os usuários - GET /users/ 
-    ● Retorna: id, name e email de todos os usuários.

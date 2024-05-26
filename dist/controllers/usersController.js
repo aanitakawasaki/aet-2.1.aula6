@@ -20,10 +20,12 @@ export const usersController = {
                 });
             }
             else {
-                res.status(200).json({
-                    'success': true,
-                    'data': allUsers,
-                });
+                const mappedUsers = allUsers.map(user => ({
+                    id: user.id,
+                    email: user.email,
+                    name: user.name
+                }));
+                res.status(200).json(mappedUsers);
             }
         }
         catch (err) {
