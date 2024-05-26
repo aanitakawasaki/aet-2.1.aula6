@@ -73,7 +73,6 @@ export const usersController = {
             const createdUser = await usersService.createUser(email, name, password);
             res.status(200).json(
                 {
-                    'sucess': true,
                     'id do usuário': createdUser[0].id,
                     'email do usuário': createdUser[0].email,
                     'nome do usuário': createdUser[0].name

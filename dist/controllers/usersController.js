@@ -34,7 +34,7 @@ export const usersController = {
             });
         }
     }),
-    //curl -X GET http://localhost:3000/api/users
+    //curl -X GET http://localhost:3000/users
     getUserById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const id = parseInt(req.params.id);
         try {
@@ -60,14 +60,16 @@ export const usersController = {
             });
         }
     }),
-    //curl -X GET http://localhost:3000/api/users/1
+    //curl -X GET http://localhost:3000/users/1
     createUser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, name, password } = req.body;
         try {
             const createdUser = yield usersService.createUser(email, name, password);
             res.status(200).json({
                 'sucess': true,
-                'data': createdUser,
+                'id do usuário': createdUser[0].id,
+                'email do usuário': createdUser[0].email,
+                'nome do usuário': createdUser[0].name
             });
         }
         catch (err) {
@@ -78,7 +80,7 @@ export const usersController = {
             });
         }
     }),
-    //curl -X POST http://localhost:3000/api/users \
+    //curl -X POST http://localhost:3000/users \
     //-H "Content-Type: application/json" \
     //-d '{
     //"email": "exemplo@mail.com",
@@ -109,7 +111,7 @@ export const usersController = {
             });
         }
     }),
-    //curl -X PUT http://localhost:3000/api/users/1 \
+    //curl -X PUT http://localhost:3000/users/1 \
     //-H "Content-Type: application/json" \
     //-d '{
     //"email": "exemplo2@mail.com",
@@ -132,5 +134,5 @@ export const usersController = {
             });
         }
     })
-    //curl -X DELETE http://localhost:3000/api/users/2
+    //curl -X DELETE http://localhost:3000/users/2
 };
