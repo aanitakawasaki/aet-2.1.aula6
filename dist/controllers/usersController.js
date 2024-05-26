@@ -132,5 +132,5 @@ export const usersController = {
             });
         }
     })
-    //curl -X DELETE http://localhost:3000/api/user/2
+    //curl -X DELETE http://localhost:3000/api/users/2
 };
