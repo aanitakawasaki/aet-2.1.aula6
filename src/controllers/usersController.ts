@@ -1,5 +1,6 @@
 import { usersService } from "../services/usersService.js";
 import { Request, Response } from "express";
+import { validationResult } from 'express-validator';
 
 interface User {
     id: number;
@@ -75,6 +76,11 @@ export const usersController = {
     //curl -X GET http://localhost:3000/users/1
     
     createUser: async(req: Request, res: Response) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         const { email, name, password } = req.body;
 
         try {

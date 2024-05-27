@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { usersService } from "../services/usersService.js";
+import { validationResult } from 'express-validator';
 ;
 export const usersController = {
     getAllUsers: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -65,6 +66,10 @@ export const usersController = {
     }),
     //curl -X GET http://localhost:3000/users/1
     createUser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
         const { email, name, password } = req.body;
         try {
             const createdUser = yield usersService.createUser(email, name, password);
@@ -121,7 +126,7 @@ export const usersController = {
     //curl -X PATCH http://localhost:3000/users/1 \
     //-H "Content-Type: application/json" \
     //-d '{
-    //"email": "exemplo2c@mail.com"
+    //"email": "exemplo2y@mail.com"
     //}'
     deleteUser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const id = parseInt(req.params.id);
