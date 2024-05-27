@@ -12,7 +12,5 @@ b) Login - POST /login/
     ● Cookie: token = sessionID; 
 c) Logout - DELETE /logout/ 
     ● Remove o cookie; 
-d) Atualiza usuário - PATCH (autenticada) /users/:id 
-    ● Recebe: name, email e/ou password (não é obrigatório informar todos os campos); 
-    ● Retorna: id, name e email; 
+d) Atualiza usuário - PATCH (autenticada) 
 e) Remove usuário - DELETE (autenticada)

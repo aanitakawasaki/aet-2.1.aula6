@@ -1,5 +1,12 @@
 import { query, queryWithoutParams } from '../config/database.js';
 
+interface User {
+    id: number;
+    email: string;
+    name: string;
+    password: string;
+};
+
 export const usersRepository = {
     getAllUsers: async() => {
         const text = 'SELECT * FROM users';
@@ -38,10 +45,18 @@ export const usersRepository = {
         }
     },
 
-    updateUser: async(id: number, email: string, name: string, password: string) => {
-        const text = 'UPDATE users SET email = $1, name = $2, password = $3 WHERE id = $4 RETURNING *';
-        const params = [email, name, password, id];
+    updateUser: async(id: number, updatedFields: Partial<User>) => {
+        const fields: string[] = [];
+        const params: any[] = [];
 
+        Object.keys(updatedFields).forEach((key, index) => {
+            fields.push(`${key} = $${index + 1}`);
+            params.push(updatedFields[key as keyof Partial<User>]); //ainda não entendi muuuito bem, assim, essa contrução
+        });
+
+        const text = `UPDATE users SET ${fields.join(', ')} WHERE id = $${params.length + 1} RETURNING *`;
+        params.push(id);
+        
         try {
             const { rows } = await query(text, params);
             return rows;

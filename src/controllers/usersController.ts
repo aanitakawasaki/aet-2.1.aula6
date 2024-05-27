@@ -1,6 +1,13 @@
 import { usersService } from "../services/usersService.js";
 import { Request, Response } from "express";
 
+interface User {
+    id: number;
+    email: string;
+    name: string;
+    password: string;
+};
+
 export const usersController = {
     getAllUsers: async(req: Request, res: Response): Promise<void> => {
         //A declaração Promise<void> indica que a função retorna uma promessa que não produz um valor específico (tipo void). Isso é comum em funções assíncronas que não têm um valor de retorno relevante.
@@ -100,20 +107,28 @@ export const usersController = {
     updateUser: async(req: Request, res: Response) => {
         const id = parseInt(req.params.id);
 
-        const outdatedUser = await usersService.getUserById(id);
-        const { email } = req.body;
-        const emailToUse = email || outdatedUser[0].email;
-        const { name } = req.body;
-        const nameToUse = name || outdatedUser[0].name;
-        const { password } = req.body;
-        const passwordToUse = password || outdatedUser[0].password;
-
         try {
-            const updatedUser = await usersService.updateUser(id, emailToUse, nameToUse, passwordToUse);
+            const { email, name, password } = req.body;
+            const updatedFields: Partial<User> = {};
+
+            if (email !== undefined) {
+                updatedFields.email = email;
+            }
+    
+            if (name !== undefined) {
+                updatedFields.name = name;
+            }
+    
+            if (password !== undefined) {
+                updatedFields.password = password;
+            }
+
+            const updatedUser = await usersService.updateUser(id, updatedFields);
             res.status(200).json(
                 {
-                    'success': true,
-                    'data': updatedUser,
+                    'id do usuário': updatedUser[0].id,
+                    'email do usuário': updatedUser[0].email,
+                    'nome do usuário': updatedUser[0].name
                 }
             );
         } catch(err: any) {
@@ -126,11 +141,10 @@ export const usersController = {
             );
         }
     },
-    //curl -X PUT http://localhost:3000/users/1 \
+    //curl -X PATCH http://localhost:3000/users/1 \
     //-H "Content-Type: application/json" \
     //-d '{
-    //"email": "exemplo2@mail.com",
-    //"name": "Ana Luiza"
+    //"email": "exemplo2y@mail.com"
     //}'
 
     deleteUser: async(req: Request, res: Response) => {

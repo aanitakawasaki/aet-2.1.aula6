@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { query, queryWithoutParams } from '../config/database.js';
+;
 export const usersRepository = {
     getAllUsers: () => __awaiter(void 0, void 0, void 0, function* () {
         const text = 'SELECT * FROM users';
@@ -44,9 +45,15 @@ export const usersRepository = {
             throw err;
         }
     }),
-    updateUser: (id, email, name, password) => __awaiter(void 0, void 0, void 0, function* () {
-        const text = 'UPDATE users SET email = $1, name = $2, password = $3 WHERE id = $4 RETURNING *';
-        const params = [email, name, password, id];
+    updateUser: (id, updatedFields) => __awaiter(void 0, void 0, void 0, function* () {
+        const fields = [];
+        const params = [];
+        Object.keys(updatedFields).forEach((key, index) => {
+            fields.push(`${key} = $${index + 1}`);
+            params.push(updatedFields[key]); //ainda não entendi muuuito bem, assim, essa contrução
+        });
+        const text = `UPDATE users SET ${fields.join(', ')} WHERE id = $${params.length + 1} RETURNING *`;
+        params.push(id);
         try {
             const { rows } = yield query(text, params);
             return rows;

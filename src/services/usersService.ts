@@ -1,5 +1,12 @@
 import { usersRepository } from "../repositories/usersRepository.js";
 
+interface User {
+    id: number;
+    email: string;
+    name: string;
+    password: string;
+};
+
 export const usersService = {
     getAllUsers: async() => {
         try {
@@ -28,9 +35,9 @@ export const usersService = {
         }  
     },
 
-    updateUser: async(id: number, email: string, name: string, password: string) => {
+    updateUser: async(id: number, updatedFields: Partial<User>) => {
         try {
-            return await usersRepository.updateUser(id, email, name, password);
+            return await usersRepository.updateUser(id, updatedFields);
         } catch(err: any) {
             console.error(`Erro ao atualizar usuário com id ${id} no banco de dados: ${err.message}`);
             throw err;

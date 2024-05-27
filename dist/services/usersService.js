@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { usersRepository } from "../repositories/usersRepository.js";
+;
 export const usersService = {
     getAllUsers: () => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -36,9 +37,9 @@ export const usersService = {
             throw err;
         }
     }),
-    updateUser: (id, email, name, password) => __awaiter(void 0, void 0, void 0, function* () {
+    updateUser: (id, updatedFields) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            return yield usersRepository.updateUser(id, email, name, password);
+            return yield usersRepository.updateUser(id, updatedFields);
         }
         catch (err) {
             console.error(`Erro ao atualizar usuário com id ${id} no banco de dados: ${err.message}`);
