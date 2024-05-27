@@ -113,21 +113,29 @@ export const usersController = {
     updateUser: async(req: Request, res: Response) => {
         const id = parseInt(req.params.id);
 
-        try {
-            const { email, name, password } = req.body;
-            const updatedFields: Partial<User> = {};
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
-            if (email !== undefined) {
-                updatedFields.email = email;
-            }
+        try {
+            // const { email, name, password } = req.body;
+            // const updatedFields: Partial<User> = {};
+
+            // if (email !== undefined) {
+            //     updatedFields.email = email;
+            // }
     
-            if (name !== undefined) {
-                updatedFields.name = name;
-            }
+            // if (name !== undefined) {
+            //     updatedFields.name = name;
+            // }
     
-            if (password !== undefined) {
-                updatedFields.password = password;
-            }
+            // if (password !== undefined) {
+            //     updatedFields.password = password;
+            // }
+
+            //isso tudo pode ser substituído por simplesmente isso:
+            const updatedFields: Partial<User> = req.body;
 
             const updatedUser = await usersService.updateUser(id, updatedFields);
             res.status(200).json(

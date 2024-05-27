@@ -96,18 +96,24 @@ export const usersController = {
     //}'
     updateUser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const id = parseInt(req.params.id);
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
         try {
-            const { email, name, password } = req.body;
-            const updatedFields = {};
-            if (email !== undefined) {
-                updatedFields.email = email;
-            }
-            if (name !== undefined) {
-                updatedFields.name = name;
-            }
-            if (password !== undefined) {
-                updatedFields.password = password;
-            }
+            // const { email, name, password } = req.body;
+            // const updatedFields: Partial<User> = {};
+            // if (email !== undefined) {
+            //     updatedFields.email = email;
+            // }
+            // if (name !== undefined) {
+            //     updatedFields.name = name;
+            // }
+            // if (password !== undefined) {
+            //     updatedFields.password = password;
+            // }
+            //isso tudo pode ser substituído por simplesmente isso:
+            const updatedFields = req.body;
             const updatedUser = yield usersService.updateUser(id, updatedFields);
             res.status(200).json({
                 'id do usuário': updatedUser[0].id,
