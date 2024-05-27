@@ -33,6 +33,19 @@ export const usersRepository = {
             throw err;
         }
     }),
+    getUserByEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
+        const text = 'SELECT * FROM users WHERE email = $1';
+        const params = [email];
+        try {
+            const { rows } = yield query(text, params);
+            console.log(`no usersRepository: ${JSON.stringify(rows[0])}`);
+            return rows[0];
+        }
+        catch (err) {
+            console.error(`Erro ao recuperar usuário com email ${email}: ${err.message}`);
+            throw err;
+        }
+    }),
     createUser: (email, name, password) => __awaiter(void 0, void 0, void 0, function* () {
         const text = 'INSERT INTO users (email, name, password) VALUES ($1, $2, $3) RETURNING *;';
         const params = [email, name, password];
@@ -48,11 +61,13 @@ export const usersRepository = {
     updateUser: (id, updatedFields) => __awaiter(void 0, void 0, void 0, function* () {
         const fields = [];
         const params = [];
+        console.log(updatedFields);
         Object.keys(updatedFields).forEach((key, index) => {
             fields.push(`${key} = $${index + 1}`);
             params.push(updatedFields[key]); //ainda não entendi muuuito bem, assim, essa contrução
         });
         const text = `UPDATE users SET ${fields.join(', ')} WHERE id = $${params.length + 1} RETURNING *`;
+        console.log(text);
         params.push(id);
         try {
             const { rows } = yield query(text, params);

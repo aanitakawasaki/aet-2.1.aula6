@@ -26,6 +26,15 @@ export const usersService = {
         }
     },
 
+    getUserByEmail: async (email: string) => {
+        try {
+            return await usersRepository.getUserByEmail(email);
+        } catch(err: any) {
+            console.error(`Erro ao recuperar usuário com email ${email}: ${err.message}`);
+            throw err;
+        }
+    },
+
     createUser: async(email: string, name: string, password: string) => {
         try {
             return await usersRepository.createUser(email, name, password);

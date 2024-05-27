@@ -1,6 +1,7 @@
 import { usersService } from "../services/usersService.js";
 import { Request, Response } from "express";
 import { validationResult } from 'express-validator';
+import bcrypt from 'bcryptjs';
 
 interface User {
     id: number;
@@ -74,6 +75,27 @@ export const usersController = {
         }
     },
     //curl -X GET http://localhost:3000/users/1
+
+    getUserByEmail: async (req: Request, res: Response) => {
+        const { email } = req.body;
+        try {
+            const userByEmail = await usersService.getUserByEmail(email);
+            res.status(200).json(
+                {
+                    'success': true,
+                    'data': userByEmail,
+                }
+            );
+        } catch(err: any) {
+            console.error(`Erro ao recuperar usuário com email ${email}: ${err.message}`);
+            res.status(500).json(
+                {
+                    'success': false,
+                    'error': 'Erro ao recuperar usuário a partir de email',
+                }
+            );
+        }
+    },
     
     createUser: async(req: Request, res: Response) => {
         const errors = validationResult(req);
@@ -83,8 +105,10 @@ export const usersController = {
 
         const { email, name, password } = req.body;
 
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         try {
-            const createdUser = await usersService.createUser(email, name, password);
+            const createdUser = await usersService.createUser(email, name, hashedPassword);
             res.status(200).json(
                 {
                     'id do usuário': createdUser[0].id,
@@ -105,9 +129,9 @@ export const usersController = {
     //curl -X POST http://localhost:3000/users \
     //-H "Content-Type: application/json" \
     //-d '{
-    //"email": "exemplo@mail.com",
-    //"name": "Ana",
-    //"password": "123abc"
+    //"email": "exemploi@mail.br",
+    //"name": "Iago",
+    //"password": "oito1234"
     //}'
 
     updateUser: async(req: Request, res: Response) => {
@@ -136,6 +160,7 @@ export const usersController = {
 
             //isso tudo pode ser substituído por simplesmente isso:
             const updatedFields: Partial<User> = req.body;
+            console.log('No usersController:', updatedFields);
 
             const updatedUser = await usersService.updateUser(id, updatedFields);
             res.status(200).json(
@@ -155,10 +180,11 @@ export const usersController = {
             );
         }
     },
-    //curl -X PATCH http://localhost:3000/users/1 \
+    //curl -X PATCH http://localhost:3000/users/6 \
     //-H "Content-Type: application/json" \
+    //-b "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzE2ODE4MDA3LCJleHAiOjE3MTY4MjE2MDd9.CpZpwUq_NM7H0BUKpN9KmRsKriLBqIefUU63FQwHWI0" \
     //-d '{
-    //"email": "exemplo2y@mail.com"
+    //"email": "exemploi@mail.jp"
     //}'
 
     deleteUser: async(req: Request, res: Response) => {
@@ -183,5 +209,6 @@ export const usersController = {
             );
         }
     }
-    //curl -X DELETE http://localhost:3000/users/2
+    //curl -X DELETE http://localhost:3000/users/6 \
+    //-b "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzE2ODE4MDA3LCJleHAiOjE3MTY4MjE2MDd9.CpZpwUq_NM7H0BUKpN9KmRsKriLBqIefUU63FQwHWI0" \
 };

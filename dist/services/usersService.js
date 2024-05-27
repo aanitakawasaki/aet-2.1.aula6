@@ -28,6 +28,15 @@ export const usersService = {
             throw err;
         }
     }),
+    getUserByEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            return yield usersRepository.getUserByEmail(email);
+        }
+        catch (err) {
+            console.error(`Erro ao recuperar usuário com email ${email}: ${err.message}`);
+            throw err;
+        }
+    }),
     createUser: (email, name, password) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             return yield usersRepository.createUser(email, name, password);
