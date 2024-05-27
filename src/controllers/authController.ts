@@ -22,7 +22,7 @@ export const authController = {
     },
     //curl -X POST http://localhost:3000/users/login \
     //-H "Content-Type: application/json" \
-    //-d '{"email": "exemploi@mail.br", "password": "oito1234"}'
+    //-d '{"email": "exemploi@mail.jp", "password": "oito1234"}'
   
     logout: (req: Request, res: Response) => {
         res.clearCookie('token');

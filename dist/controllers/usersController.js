@@ -173,5 +173,6 @@ export const usersController = {
             });
         }
     })
-    //curl -X DELETE http://localhost:3000/users/4
+    //curl -X DELETE http://localhost:3000/users/6 \
+    //-b "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzE2ODE4MDA3LCJleHAiOjE3MTY4MjE2MDd9.CpZpwUq_NM7H0BUKpN9KmRsKriLBqIefUU63FQwHWI0" \
 };
