@@ -134,6 +134,14 @@ export const usersController = {
     //"password": "oito1234"
     //}'
 
+    //curl -X POST http://localhost:3000/users \
+    //-H "Content-Type: application/json" \
+    //-d '{
+    //"email": "exemplom@mail.br",
+    //"name": "Marina",
+    //"password": "doze1234"
+    //}'
+
     updateUser: async(req: Request, res: Response) => {
         const id = parseInt(req.params.id);
 
@@ -180,11 +188,11 @@ export const usersController = {
             );
         }
     },
-    //curl -X PATCH http://localhost:3000/users/6 \
+    //curl -X PATCH http://localhost:3000/users/2 \
     //-H "Content-Type: application/json" \
-    //-b "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzE2ODE4MDA3LCJleHAiOjE3MTY4MjE2MDd9.CpZpwUq_NM7H0BUKpN9KmRsKriLBqIefUU63FQwHWI0" \
+    //-b "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzE2ODE5ODM0LCJleHAiOjE3MTY4MjM0MzR9.1HPyaoOafVEC87I9_pOkLoWE4a1FZ9MVv9XG6qSbJd4" \
     //-d '{
-    //"email": "exemploi@mail.jp"
+    //"email": "exemplom@mail.jp"
     //}'
 
     deleteUser: async(req: Request, res: Response) => {
@@ -209,6 +217,6 @@ export const usersController = {
             );
         }
     }
-    //curl -X DELETE http://localhost:3000/users/6 \
-    //-b "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzE2ODE4MDA3LCJleHAiOjE3MTY4MjE2MDd9.CpZpwUq_NM7H0BUKpN9KmRsKriLBqIefUU63FQwHWI0" \
+    //curl -X DELETE http://localhost:3000/users/1 \
+    //-b "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzE2ODE5ODM0LCJleHAiOjE3MTY4MjM0MzR9.1HPyaoOafVEC87I9_pOkLoWE4a1FZ9MVv9XG6qSbJd4" \
 };

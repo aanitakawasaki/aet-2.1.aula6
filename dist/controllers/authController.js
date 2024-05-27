@@ -31,6 +31,9 @@ export const authController = {
     //curl -X POST http://localhost:3000/users/login \
     //-H "Content-Type: application/json" \
     //-d '{"email": "exemploi@mail.br", "password": "oito1234"}'
+    //curl -X POST http://localhost:3000/users/login \
+    //-H "Content-Type: application/json" \
+    //-d '{"email": "exemplom@mail.br", "password": "doze1234"}'
     logout: (req, res) => {
         res.clearCookie('token');
         res.status(200).json({ message: 'Logout bem-sucedido' });
