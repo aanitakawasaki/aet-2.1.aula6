@@ -10,7 +10,7 @@ export const authController = {
             if(loginResult) {
                 const { id, token } = loginResult;
                 res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
-                res.status(200).json({ id });
+                res.status(200).json({ id, token });
             } else {
                 res.status(401).json({ error: 'Email ou senha inválidos' });
             }
