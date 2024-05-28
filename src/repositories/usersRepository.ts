@@ -38,7 +38,6 @@ export const usersRepository = {
 
         try {
             const { rows } = await query(text, params);
-            console.log (`no usersRepository: ${JSON.stringify(rows[0])}`);
             return rows[0];
         } catch (err: any) {
             console.error(`Erro ao recuperar usuário com email ${email}: ${err.message}`);
@@ -63,15 +62,12 @@ export const usersRepository = {
         const fields: string[] = [];
         const params: any[] = [];
 
-        console.log(updatedFields);
-
         Object.keys(updatedFields).forEach((key, index) => {
             fields.push(`${key} = $${index + 1}`);
             params.push(updatedFields[key as keyof Partial<User>]); //ainda não entendi muuuito bem, assim, essa contrução
         });
 
         const text = `UPDATE users SET ${fields.join(', ')} WHERE id = $${params.length + 1} RETURNING *`;
-        console.log(text);
         params.push(id);
         
         try {

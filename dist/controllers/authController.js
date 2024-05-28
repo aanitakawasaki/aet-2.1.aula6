@@ -11,11 +11,9 @@ import { authService } from '../services/authService.js';
 export const authController = {
     login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const { email, password } = req.body;
-        console.log('no authController:', email, password);
         try {
             const loginResult = yield authService.login(email, password);
             if (loginResult) {
-                console.log(loginResult);
                 const { id, token } = loginResult;
                 res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production' });
                 res.status(200).json({ id });

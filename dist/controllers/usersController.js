@@ -140,7 +140,6 @@ export const usersController = {
             // }
             //isso tudo pode ser substituído por simplesmente isso:
             const updatedFields = req.body;
-            console.log('No usersController:', updatedFields);
             const updatedUser = yield usersService.updateUser(id, updatedFields);
             res.status(200).json({
                 'id do usuário': updatedUser[0].id,

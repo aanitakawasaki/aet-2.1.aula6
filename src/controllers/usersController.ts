@@ -168,8 +168,7 @@ export const usersController = {
 
             //isso tudo pode ser substituído por simplesmente isso:
             const updatedFields: Partial<User> = req.body;
-            console.log('No usersController:', updatedFields);
-
+            
             const updatedUser = await usersService.updateUser(id, updatedFields);
             res.status(200).json(
                 {
