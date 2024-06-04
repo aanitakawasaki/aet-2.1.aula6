@@ -196,24 +196,27 @@ export const usersController = {
 
     deleteUser: async(req: Request, res: Response) => {
         const id = parseInt(req.params.id);
-
-        try {
-            const deletedUser = await usersService.deleteUser(id);
-            res.status(200).json(
-                {
+        
+        if (req.user && req.user.id === id) {
+            try {
+                const deletedUser = await usersService.deleteUser(id);
+                res.status(200).json({
                     'id': deletedUser[0].id,
                     'email': deletedUser[0].email,
                     'name': deletedUser[0].name
-                }
-            );
-        } catch(err: any) {
-            console.error(`Erro ao deletar usuário com id ${id} no banco de dados: ${err.message}`);
-            res.status(500).json(
-                {
+                });
+            } catch (err: any) {
+                console.error(`Erro ao deletar usuário com id ${id} no banco de dados: ${err.message}`);
+                res.status(500).json({
                     'success': false,
                     'error': 'Erro ao deletar usuário do banco de dados',
-                }
-            );
+                });
+            }
+        } else {
+            return res.status(403).json({
+                'success': false,
+                'error': 'Você não tem permissão para excluir este usuário.'
+            });
         }
     }
     //curl -X DELETE http://localhost:3000/users/1 \
