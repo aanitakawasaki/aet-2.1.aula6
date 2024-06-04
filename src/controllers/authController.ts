@@ -15,7 +15,7 @@ export const authController = {
                 res.status(401).json({ error: 'Email ou senha inválidos' });
             }
         } catch (err: any) {
-            res.status(401).json({ error: 'Email ou senha inválidos!!!' });
+            res.status(401).json({ error: 'Email ou senha inválidos' });
         }
     },
     //curl -X POST http://localhost:3000/users/login \
