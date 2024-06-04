@@ -9,7 +9,7 @@ interface User {
 
 export const usersRepository = {
     getAllUsers: async() => {
-        const text = 'SELECT * FROM users';
+        const text = 'SELECT * FROM users2';
         try {
             const { rows } = await queryWithoutParams(text);
             return rows;
@@ -20,7 +20,7 @@ export const usersRepository = {
     },
 
     getUserById: async(id: number) => {
-        const text = 'SELECT * FROM users WHERE id = $1';
+        const text = 'SELECT * FROM users2 WHERE id = $1';
         const params = [id];
 
         try {
@@ -33,7 +33,7 @@ export const usersRepository = {
     },
 
     getUserByEmail: async (email: string) => {
-        const text = 'SELECT * FROM users WHERE email = $1';
+        const text = 'SELECT * FROM users2 WHERE email = $1';
         const params = [email];
 
         try {
@@ -46,7 +46,7 @@ export const usersRepository = {
     },
 
     createUser: async(email: string, name: string, password: string) => {
-        const text = 'INSERT INTO users (email, name, password) VALUES ($1, $2, $3) RETURNING *;';
+        const text = 'INSERT INTO users2 (email, name, password) VALUES ($1, $2, $3) RETURNING *;';
         const params = [email, name, password];
 
         try {
@@ -67,7 +67,7 @@ export const usersRepository = {
             params.push(updatedFields[key as keyof Partial<User>]); //ainda não entendi muuuito bem, assim, essa contrução
         });
 
-        const text = `UPDATE users SET ${fields.join(', ')} WHERE id = $${params.length + 1} RETURNING *`;
+        const text = `UPDATE users2 SET ${fields.join(', ')} WHERE id = $${params.length + 1} RETURNING *`;
         params.push(id);
         
         try {
@@ -80,7 +80,7 @@ export const usersRepository = {
     },
 
     deleteUser: async(id: number) => {
-        const text = 'DELETE FROM users WHERE id = $1 RETURNING *';
+        const text = 'DELETE FROM users2 WHERE id = $1 RETURNING *';
         const params = [id];
 
         try {

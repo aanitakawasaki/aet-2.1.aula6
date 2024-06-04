@@ -23,7 +23,7 @@ export const authController = {
             }
         }
         catch (err) {
-            res.status(401).json({ error: 'Email ou senha inválidos!!!' });
+            res.status(401).json({ error: 'Email ou senha inválidos' });
         }
     }),
     //curl -X POST http://localhost:3000/users/login \

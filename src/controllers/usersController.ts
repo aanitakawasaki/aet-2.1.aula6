@@ -59,8 +59,9 @@ export const usersController = {
             } else {
                 res.status(200).json(
                     {
-                        'success': true,
-                        'data': userById,
+                        'id': userById[0].id,
+                        'email': userById[0].email,
+                        'name': userById[0].name
                     }
                 );
             }

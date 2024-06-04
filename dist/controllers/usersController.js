@@ -17,7 +17,7 @@ export const usersController = {
         try {
             const allUsers = yield usersService.getAllUsers();
             if (allUsers.length === 0) {
-                res.status(200).json({
+                res.status(204).json({
                     'success': true,
                     'data': 'Não há nenhum usuário no banco de dados'
                 });
@@ -45,15 +45,16 @@ export const usersController = {
         try {
             const userById = yield usersService.getUserById(id);
             if (userById.length === 0) {
-                res.status(200).json({
+                res.status(204).json({
                     'sucess': true,
                     'data': 'Não há nenhum usuário com o id especificado no banco de dados'
                 });
             }
             else {
                 res.status(200).json({
-                    'success': true,
-                    'data': userById,
+                    'id': userById[0].id,
+                    'email': userById[0].email,
+                    'name': userById[0].name
                 });
             }
         }
@@ -93,9 +94,9 @@ export const usersController = {
         try {
             const createdUser = yield usersService.createUser(email, name, hashedPassword);
             res.status(200).json({
-                'id do usuário': createdUser[0].id,
-                'email do usuário': createdUser[0].email,
-                'nome do usuário': createdUser[0].name
+                'id': createdUser[0].id,
+                'email': createdUser[0].email,
+                'name': createdUser[0].name
             });
         }
         catch (err) {
@@ -142,9 +143,9 @@ export const usersController = {
             const updatedFields = req.body;
             const updatedUser = yield usersService.updateUser(id, updatedFields);
             res.status(200).json({
-                'id do usuário': updatedUser[0].id,
-                'email do usuário': updatedUser[0].email,
-                'nome do usuário': updatedUser[0].name
+                'id': updatedUser[0].id,
+                'email': updatedUser[0].email,
+                'name': updatedUser[0].name
             });
         }
         catch (err) {
@@ -163,19 +164,27 @@ export const usersController = {
     //}'
     deleteUser: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const id = parseInt(req.params.id);
-        try {
-            const deletedUser = yield usersService.deleteUser(id);
-            res.status(200).json({
-                'id do usuário': deletedUser[0].id,
-                'email do usuário': deletedUser[0].email,
-                'nome do usuário': deletedUser[0].name
-            });
+        if (req.user && req.user.id === id) {
+            try {
+                const deletedUser = yield usersService.deleteUser(id);
+                res.status(200).json({
+                    'id': deletedUser[0].id,
+                    'email': deletedUser[0].email,
+                    'name': deletedUser[0].name
+                });
+            }
+            catch (err) {
+                console.error(`Erro ao deletar usuário com id ${id} no banco de dados: ${err.message}`);
+                res.status(500).json({
+                    'success': false,
+                    'error': 'Erro ao deletar usuário do banco de dados',
+                });
+            }
         }
-        catch (err) {
-            console.error(`Erro ao deletar usuário com id ${id} no banco de dados: ${err.message}`);
-            res.status(500).json({
+        else {
+            return res.status(403).json({
                 'success': false,
-                'error': 'Erro ao deletar usuário do banco de dados',
+                'error': 'Você não tem permissão para excluir este usuário.'
             });
         }
     })

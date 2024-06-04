@@ -11,7 +11,7 @@ import { query, queryWithoutParams } from '../config/database.js';
 ;
 export const usersRepository = {
     getAllUsers: () => __awaiter(void 0, void 0, void 0, function* () {
-        const text = 'SELECT * FROM users';
+        const text = 'SELECT * FROM users2';
         try {
             const { rows } = yield queryWithoutParams(text);
             return rows;
@@ -22,7 +22,7 @@ export const usersRepository = {
         }
     }),
     getUserById: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        const text = 'SELECT * FROM users WHERE id = $1';
+        const text = 'SELECT * FROM users2 WHERE id = $1';
         const params = [id];
         try {
             const { rows } = yield query(text, params);
@@ -34,7 +34,7 @@ export const usersRepository = {
         }
     }),
     getUserByEmail: (email) => __awaiter(void 0, void 0, void 0, function* () {
-        const text = 'SELECT * FROM users WHERE email = $1';
+        const text = 'SELECT * FROM users2 WHERE email = $1';
         const params = [email];
         try {
             const { rows } = yield query(text, params);
@@ -46,7 +46,7 @@ export const usersRepository = {
         }
     }),
     createUser: (email, name, password) => __awaiter(void 0, void 0, void 0, function* () {
-        const text = 'INSERT INTO users (email, name, password) VALUES ($1, $2, $3) RETURNING *;';
+        const text = 'INSERT INTO users2 (email, name, password) VALUES ($1, $2, $3) RETURNING *;';
         const params = [email, name, password];
         try {
             const { rows } = yield query(text, params);
@@ -64,7 +64,7 @@ export const usersRepository = {
             fields.push(`${key} = $${index + 1}`);
             params.push(updatedFields[key]); //ainda não entendi muuuito bem, assim, essa contrução
         });
-        const text = `UPDATE users SET ${fields.join(', ')} WHERE id = $${params.length + 1} RETURNING *`;
+        const text = `UPDATE users2 SET ${fields.join(', ')} WHERE id = $${params.length + 1} RETURNING *`;
         params.push(id);
         try {
             const { rows } = yield query(text, params);
@@ -76,7 +76,7 @@ export const usersRepository = {
         }
     }),
     deleteUser: (id) => __awaiter(void 0, void 0, void 0, function* () {
-        const text = 'DELETE FROM users WHERE id = $1 RETURNING *';
+        const text = 'DELETE FROM users2 WHERE id = $1 RETURNING *';
         const params = [id];
         try {
             const { rows } = yield query(text, params);
